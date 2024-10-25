@@ -1,5 +1,5 @@
 import {useMutation, useQuery, useQueryClient} from '@tanstack/react-query'
-import axios from "axios";
+import axios, {AxiosPromise} from "axios";
 
 export const useGetUserListQuery = () => {
     return useQuery({
@@ -28,3 +28,14 @@ export const useGetUserListQuery = () => {
 //     });
 // };
 //
+
+const getCommentDetail = async (id: string) => {
+    return await axios.get('https://jsonplaceholder.typicode.com/comments');
+}
+const useGetCommentsQuery = () => {
+    return useQuery({
+        queryKey: ['commentList'],
+        queryFn: ()=> getCommentDetail('id')
+    })
+}
+

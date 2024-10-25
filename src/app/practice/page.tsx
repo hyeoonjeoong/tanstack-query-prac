@@ -15,9 +15,10 @@ interface TComments {
 const PracticePage = () => {
     const queryClient = useQueryClient();
 
-    const { data, isLoading, error, isStale } = useGetUserListQuery();
+    const { data, isLoading, error, isStale, status, fetchStatus } = useGetUserListQuery();
 
-    const mutation = useMutation({
+    // const { mutate } = useMutation({ // 이렇게 mutate 만 가져와서 사용해도 된다.
+        const mutation = useMutation({
         mutationFn: async ({ postId, title }: { postId: number; title: string }) => {
             const response = await axios.patch(`https://jsonplaceholder.typicode.com/posts/${postId}`, {
                 title: title,
@@ -35,8 +36,11 @@ const PracticePage = () => {
 
     console.log(data, 'data')
     console.log(mutation,'mutation')
+    console.log(status, 'status')
+    console.log(fetchStatus, 'fetchStatus')
 
     const handleUpdate = (postId: number) => {
+        // mutate({ postId, title: 'foo' }); //그럼 코드 상 보기에 더 편하다.
         mutation.mutate({ postId, title: 'foo' });
     };
 
